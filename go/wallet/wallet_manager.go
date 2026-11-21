@@ -21,6 +21,11 @@ import (
 	authtx "github.com/cosmos/cosmos-sdk/x/auth/tx"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	vestingtypes "github.com/cosmos/cosmos-sdk/x/auth/vesting/types"
+	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
+	distributiontypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
+	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types/v1"
+	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
+	transfertypes "github.com/cosmos/ibc-go/v10/modules/apps/transfer/types"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/credentials/insecure"
@@ -356,6 +361,11 @@ func newEncodingConfig() encodingConfig {
 	marshaler := codec.NewProtoCodec(registry)
 	std.RegisterLegacyAminoCodec(amino)
 	std.RegisterInterfaces(registry)
+	banktypes.RegisterInterfaces(registry)
+	stakingtypes.RegisterInterfaces(registry)
+	distributiontypes.RegisterInterfaces(registry)
+	govtypes.RegisterInterfaces(registry)
+	transfertypes.RegisterInterfaces(registry)
 	storagetypes.RegisterInterfaces(registry)
 	filetreetypes.RegisterInterfaces(registry)
 	registry.RegisterImplementations(

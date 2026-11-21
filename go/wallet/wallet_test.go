@@ -6,6 +6,12 @@ import (
 
 	filetreetypes "github.com/atlas-depin/atlas/x/filetree/types"
 	storagetypes "github.com/atlas-depin/atlas/x/storage/types"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
+	distributiontypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
+	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types/v1"
+	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
+	transfertypes "github.com/cosmos/ibc-go/v10/modules/apps/transfer/types"
 )
 
 const testMnemonic = "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about"
@@ -93,6 +99,11 @@ func TestEncodingConfigSupportsAtlasMessages(t *testing.T) {
 	encoding := newEncodingConfig()
 	builder := encoding.txConfig.NewTxBuilder()
 	if err := builder.SetMsgs(
+		&banktypes.MsgSend{FromAddress: "atl1test", ToAddress: "atl1recipient", Amount: sdk.NewCoins(sdk.NewInt64Coin("uatl", 1))},
+		&stakingtypes.MsgDelegate{DelegatorAddress: "atl1test", ValidatorAddress: "atlvaloper1test", Amount: sdk.NewInt64Coin("uatl", 1)},
+		&distributiontypes.MsgWithdrawDelegatorReward{DelegatorAddress: "atl1test", ValidatorAddress: "atlvaloper1test"},
+		&govtypes.MsgVote{ProposalId: 1, Voter: "atl1test", Option: govtypes.OptionYes},
+		&transfertypes.MsgTransfer{SourcePort: "transfer", SourceChannel: "channel-0", Token: sdk.NewInt64Coin("uatl", 1), Sender: "atl1test", Receiver: "cosmos1recipient"},
 		&storagetypes.MsgBuyStorage{Creator: "atl1test", Duration: 1, Bytes: 1},
 		&filetreetypes.MsgPostNode{Creator: "atl1test", Path: "/", NodeType: "folder"},
 	); err != nil {
