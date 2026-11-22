@@ -160,5 +160,3 @@ require (
 )
 
 replace github.com/atlas-depin/atlas-sdk/go => ../../go
-
-replace github.com/atlas-depin/atlas => ../../../atlas-protocol

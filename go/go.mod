@@ -165,7 +165,3 @@ require (
 	pgregory.net/rapid v1.2.0 // indirect
 	sigs.k8s.io/yaml v1.6.0 // indirect
 )
-
-// The Atlas protocol's canonical module path is github.com/atlas-depin/atlas.
-// Use the checked-out protocol while its matching public module tag is pending.
-replace github.com/atlas-depin/atlas => ../../atlas-protocol
